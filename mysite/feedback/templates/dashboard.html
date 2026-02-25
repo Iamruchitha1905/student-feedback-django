@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">📊 Feedback Dashboard</h2>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Total Feedback</h5>
+                <h2>{{ total }}</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Average Rating</h5>
+                <h2>{{ avg_rating|floatformat:1 }}/5</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Export Data</h5>
+                <a href="{% url 'export' %}" class="btn btn-success mt-2 w-100">Download CSV</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Chart Section -->
+    <div class="card shadow-sm p-4">
+        <h4 class="text-center">Ratings Distribution</h4>
+        <canvas id="ratingChart"></canvas>
+    </div>
+
+</div>
+
+<!-- Chart JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById("ratingChart");
+
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["1 Star", "2 Stars", "3 Stars", "4 Stars", "5 Stars"],
+            datasets: [{
+                label: "Ratings Count",
+                data: {{ rating_counts|safe }},
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>All Feedback</h2>
+
+<div class="mt-4">
+
+{% for fb in feedbacks %}
+<div class="card mb-3 shadow-sm">
+    <div class="card-body">
+        <h4>{{ fb.name }} ({{ fb.course }})</h4>
+        <p>Rating: 
+            <span style="color: gold;">
+                {{ fb.rating }} ⭐
+            </span>
+        </p>
+        <p>{{ fb.comments }}</p>
+        <small class="text-muted">{{ fb.submitted_at }}</small>
+    </div>
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}
